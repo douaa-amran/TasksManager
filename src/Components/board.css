@@ -69,3 +69,17 @@
   left: 50%;
   filter: blur(0rem);
 }
+
+input {
+  background-color: transparent;
+  border: none;
+  flex-grow: 1;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: aliceblue;
+  font-weight: 900;
+  font-size: 1em;
+  text-align: center;
+}

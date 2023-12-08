@@ -9,8 +9,19 @@ export const getBoards = createAsyncThunk('boards/fetchBoards', async () => {
 
 export const deleteBoard = createAsyncThunk('dboards/deleteBoard', async (id) => {
     try {
-        await axios.delete('http://localhost:5000/api/boards/'+id);
-        return id;
+        await axios.delete(`http://localhost:5000/api/boards/${id.$oid}`);
+        return id.$oid;
+      } catch (error) {
+        throw error;
+      }
+})
+
+export const updateBoard = createAsyncThunk('uboards/updateBoard', async ({ id, newName }) => {
+    try {
+        await axios.patch(`http://localhost:5000/api/boards/${id.$oid}`,{ board_name: newName },{headers: {
+            'Content-Type': 'application/json',
+          }});
+        return { id: id.$oid, updatedData: { board_name: newName } };
       } catch (error) {
         throw error;
       }
@@ -22,24 +33,7 @@ const BoardsSlice = createSlice({
         boards: [],
         loading:false
     },
-    reducers: {
-        ajouter: (state, action) => {
-            state.boards=[...state.boards, action.payload]
-        },
-        supprimertous: (state, action) => {
-            state.boards = []
-        },
-        supprimercom: (state, action) => {
-            state.boards=state.boards.filter(board => board.completed === false);
-        },
-        supprimernonco: (state, action) => {
-            state.boards=state.boards.filter(board => board.completed === true);
-        },
-        valider: (state, action) => {
-            state.boards=state.boards.map(board =>
-                board.id === action.payload ? { ...board, completed: !board.completed } : board)
-        }
-    },
+    reducers: {},
     extraReducers:(builder) =>{
         builder.addCase(getBoards.pending, (state,action) =>{
             state.loading = true;
@@ -49,11 +43,16 @@ const BoardsSlice = createSlice({
             state.loading = false;
         })
         builder.addCase(deleteBoard.fulfilled, (state, action) => {
-            state.boards = state.boards.filter((board) => board._id !== action.payload);
+            state.boards = state.boards.filter((board) => board._id.$oid !== action.payload);
+        })
+        builder.addCase(updateBoard.fulfilled, (state, action) => {
+            state.boards = state.boards.map((board) =>  board._id.$oid === action.payload.id
+            ? { ...board, ...action.payload.updatedData }
+            : board);
         })
     }
 
 });
 
-export const {ajouter,modifier,supprimer,supprimertous,supprimercom,supprimernonco,valider} = BoardsSlice.actions;
+export const {} = BoardsSlice.actions;
 export default BoardsSlice.reducer;
