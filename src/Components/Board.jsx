@@ -1,11 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
-import { FaTrash, FaEdit, FaEye } from 'react-icons/fa';
+import { FaTrash, FaEdit } from 'react-icons/fa';
+import { MdMoreHoriz } from "react-icons/md";
 import { CiSaveUp1 } from "react-icons/ci";
 import { MdOutlineCancel } from "react-icons/md";
 import { useDispatch } from 'react-redux';
 import { deleteBoard, modifier, supprimer, updateBoard } from '../redux/BoardSlice';
 import './board.css';
+import { Link } from 'react-router-dom';
 
 export default function Board(props) {
   const dispatch = useDispatch();
@@ -61,10 +63,10 @@ export default function Board(props) {
             <FaEdit />
           </a>
         )}
-        <a className="btn" href="#">
-          {/* Visibility Icon */}
-          <FaEye />
-        </a>
+        <Link className="btn" to={'/tasks/' + props.id.$oid}>
+          {console.log(props.id.$oid)}
+          <MdMoreHoriz />
+        </Link>
       </div>
     </div>
   );

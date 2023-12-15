@@ -1,14 +1,15 @@
 import './App.css';
 import Boards from './Components/Boards';
 import { Route, Routes } from 'react-router-dom';
+import Tasks from './Components/Tasks';
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Boards />} />
+        <Route path='/' element={<Boards />} />
+        <Route path='/tasks/:idBoard' element={<Tasks />} />
       </Routes>
-      
     </div>
   );
 }
