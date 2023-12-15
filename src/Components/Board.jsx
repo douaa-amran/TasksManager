@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 import { MdMoreHoriz } from "react-icons/md";
@@ -13,6 +13,10 @@ export default function Board(props) {
   const dispatch = useDispatch();
   const [editable, setEditable] = useState(false);
   const [editedName, setEditedName] = useState(props.name);
+
+  useEffect(() => {
+    setEditedName(props.name);
+  }, [props.name]);
 
   const handleEdit = () => {
     setEditable(true);
@@ -64,7 +68,6 @@ export default function Board(props) {
           </a>
         )}
         <Link className="btn" to={'/tasks/' + props.id.$oid}>
-          {console.log(props.id.$oid)}
           <MdMoreHoriz />
         </Link>
       </div>

@@ -3,7 +3,6 @@ import axios from 'axios'
 
 
 export const getTasks = createAsyncThunk('boards/fetchBoards', async (id) => {
-    console.log(id)
     const boards = await axios.get(`http://localhost:5000/api/boards/${id}/tasks`)
     return boards.data
 })
@@ -50,7 +49,7 @@ const TasksSlice = createSlice({
             state.loading = false;
         })
         builder.addCase(deleteTask.fulfilled, (state, action) => {
-            state.tasks = state.tasks.filter((task)=> task.id_task !== action.payload)
+            state.tasks = state.tasks.filter((task)=> task.task_id !== action.payload)
             state.loading = false;
         })
     }

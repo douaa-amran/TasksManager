@@ -4,21 +4,21 @@ import { FaPen } from 'react-icons/fa6';
 import { useDispatch } from 'react-redux';
 import { deleteTask, updateTaskStatus } from '../redux/TasksSlice';
 
-export default function Task({ id, id_board,name, des, status }) {
+export default function Task({ taskId, id_board,name, des, status }) {
     const dispatch = useDispatch()
-    const checkboxId = `_checkbox-${id}`;
-    const labelId = `_label-${id}`;
+    const checkboxId = `_checkbox-${taskId}`;
+    const labelId = `_label-${taskId}`;
     const [comp, setCom] = useState(status==='Completed' ? true : false);
     return (
-        <li key={id}>
-            <div className="p-5 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white flex items-center gap-3">
+        <li>
+            <div className="p-5 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white flex items-center gap-3">
                 <div className="checkbox-wrapper">
                     <input id={checkboxId} 
                     type="checkbox" 
                     checked={comp}
                     onChange={(e)=>{
                         setCom(e.target.checked);
-                        dispatch(updateTaskStatus({ boardId: id_board, taskId: id, status: e.target.checked ? 'Completed' : 'In Progress' }));
+                        dispatch(updateTaskStatus({ boardId: id_board, taskId: taskId, status: e.target.checked ? 'Completed' : 'In Progress' }));
                     }}
                     />
                     <label htmlFor={checkboxId} id={labelId}>
@@ -35,12 +35,12 @@ export default function Task({ id, id_board,name, des, status }) {
                     <span className="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium rounded text-gray-400">
                         {des}
                     </span>
-                    <span className="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">
+                    <span className="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-800 dark:text-gray-400">
                         {status}
                     </span>
                 </div>
                 <div className="flex gap-2">
-                    <button className="button" onClick={()=>dispatch(deleteTask({boardId: id_board, taskId: id}))}>
+                    <button className="button" onClick={()=>dispatch(deleteTask({boardId: id_board, taskId: taskId}))}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
