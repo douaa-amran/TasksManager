@@ -7,22 +7,28 @@ export const getTasks = createAsyncThunk('boards/fetchBoards', async (id) => {
     return boards.data
 })
 
-export const updateTaskStatus = createAsyncThunk('tasks/updateTaskStatus', async ({ boardId, taskId, status }) => {
+export const updateTaskStatus = createAsyncThunk('tasks/updateTaskStatus', async ({ boardId, taskId, status, name, description, due_date }) => {
     try {
-        await axios.patch(`http://localhost:5000/api/boards/${boardId}/tasks/${taskId}`, { status });
-        return { taskId, updatedData: { status } };
+        const payload = {};
+        if (status) payload.status = status;
+        if (name) payload.task_name = name;
+        if (description) payload.description = description;
+        if (due_date) payload.due_date = due_date;
+
+        await axios.patch(`http://localhost:5000/api/boards/${boardId}/tasks/${taskId}`, { payload });
+        return { taskId, updatedData: payload };
     } catch (error) {
         throw error;
     }
 });
 
-export const deleteTask = createAsyncThunk('dbtask/deleteTask', async ({boardId, taskId}) => {
+export const deleteTask = createAsyncThunk('dbtask/deleteTask', async ({ boardId, taskId }) => {
     try {
         await axios.delete(`http://localhost:5000/api/boards/${boardId}/tasks/${taskId}`);
         return taskId;
-      } catch (error) {
+    } catch (error) {
         throw error;
-      }
+    }
 })
 
 
@@ -30,9 +36,14 @@ const TasksSlice = createSlice({
     name: 'tasks',
     initialState: {
         tasks: [],
-        loading: false
+        loading: false,
+        selectedTask: null
     },
-    reducers: {},
+    reducers: {
+        setSelectedTask: (state, action) => {
+            state.selectedTask = action.payload
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(getTasks.pending, (state, action) => {
             state.loading = true;
@@ -42,19 +53,21 @@ const TasksSlice = createSlice({
             state.loading = false;
         })
         builder.addCase(updateTaskStatus.fulfilled, (state, action) => {
-            const { taskId, updatedData: { status } } = action.payload;
-            state.tasks = state.tasks.map((task) =>
-                task.task_id === taskId ? { ...task, status } : task
-            )
+            const { taskId, updatedData } = action.payload;
+            const updatedTasks = state.tasks.map((task) =>
+                task.task_id === taskId ? { ...task, ...updatedData } : task
+            );
+            state.tasks = updatedTasks;
+            console.log(state.tasks,'before')
             state.loading = false;
         })
         builder.addCase(deleteTask.fulfilled, (state, action) => {
-            state.tasks = state.tasks.filter((task)=> task.task_id !== action.payload)
+            state.tasks = state.tasks.filter((task) => task.task_id !== action.payload)
             state.loading = false;
         })
     }
 
 });
 
-export const { } = TasksSlice.actions;
+export const { setSelectedTask } = TasksSlice.actions;
 export default TasksSlice.reducer;

@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Task.css';
 import { FaPen } from 'react-icons/fa6';
 import { useDispatch } from 'react-redux';
-import { deleteTask, updateTaskStatus } from '../redux/TasksSlice';
+import { deleteTask, getTasks, setSelectedTask, updateTaskStatus } from '../redux/TasksSlice';
 
-export default function Task({ taskId, id_board,name, des, status }) {
+export default function Task({ taskId, id_board,name, des, dueDate,status , toggle }) {
     const dispatch = useDispatch()
     const checkboxId = `_checkbox-${taskId}`;
     const labelId = `_label-${taskId}`;
     const [comp, setCom] = useState(status==='Completed' ? true : false);
+
     return (
         <li>
             <div className="p-5 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white flex items-center gap-3">
@@ -29,7 +30,7 @@ export default function Task({ taskId, id_board,name, des, status }) {
                     <div className='flex'>
                         <p className="ms-3 whitespace-nowrap">{name}</p>
                         <span className="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium rounded text-gray-400">
-                            2023-12-12
+                            {dueDate}
                         </span>
                     </div>
                     <span className="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium rounded text-gray-400">
@@ -79,7 +80,10 @@ export default function Task({ taskId, id_board,name, des, status }) {
                             </defs>
                         </svg>
                     </button>
-                    <button className="button">
+                    <button className="button" onClick={()=>{
+                        toggle();
+                        dispatch(setSelectedTask(taskId))
+                        }}>
                         <FaPen />
                     </button>
                 </div>

@@ -6,8 +6,8 @@ export default function TaskEdFo() {
         dateFormat: "Y-m-d",
       });
     return (
-        <>
-            <div className="flex md:w-full lg:w-3/5 min-h-full flex-1 flex-col justify-center px-6 py-9 pb-20 lg:px-8 rounded-xl bg-gray-800">
+        <div >
+            <div className="flex md:w-full lg:w-2/5 min-h-full  flex-col justify-center px-6 py-9 pb-20 lg:px-8 rounded-xl bg-gray-800">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-indigo-400 ">
                         Edit Task
@@ -71,6 +71,6 @@ export default function TaskEdFo() {
                     </form>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
