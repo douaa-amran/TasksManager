@@ -3,19 +3,31 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateTaskStatus } from '../redux/TasksSlice';
+import { getTasks, updateTaskStatus } from '../redux/TasksSlice';
 
-export default function UpdateModal({ toggle, id_board }) {
-    const tasks = useSelector((state) => state.tasks.tasks);
-    const taskId = useSelector((state) => state.tasks.selectedTask);
-    const task = tasks.find((task) => task.task_id === taskId)
+export default function AddTask({ toggle, id_board}) {
     const dispatch = useDispatch()
-    
-    const [name, setName] = useState(() => task.task_name);
-    const [description, setDescription] = useState(task.description);
-    const [dueDate, setDueDate] = useState(task.due_date);
+    const tasks = useSelector((state) => state.tasks.tasks);
+
+    useEffect(() => {
+        try{
+           dispatch(getTasks(id_board)); 
+        }
+        catch(err){
+            console.log("Error getting tasks: ", err);
+            }
+        
+      }, [dispatch, id_board]);
+
+
+    const taskId = tasks.length>0 ? tasks[tasks.length-1].task_id + 1 : 1;
+
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [dueDate, setDueDate] = useState('');
 
     const flatpickrRef = useRef(null);
+
 
     useEffect(() => {
         flatpickrRef.current = flatpickr('#due_date', {
@@ -46,7 +58,7 @@ export default function UpdateModal({ toggle, id_board }) {
                     <div className="flex md:w-4/5 sm:w-4/5 lg:w-5/6 min-h-full flex-col justify-center px-6 py-9 pb-20 lg:px-8 rounded-xl bg-gray-800">
                         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-indigo-400 ">
-                                Edit Task
+                                Add Task
                             </h2>
                         </div>
 
@@ -55,7 +67,7 @@ export default function UpdateModal({ toggle, id_board }) {
                                 e.preventDefault();
                                 console.log('Form submitted');
                                 toggle();
-                                dispatch(updateTaskStatus({ boardId: id_board, taskId: taskId, name, description, due_date:dueDate }));
+                                dispatch(updateTaskStatus({ boardId: id_board, taskId: taskId, name, description, due_date:dueDate ,status:'In progress'}));
                                 }}
                                 className="space-y-8" action="#" method="POST">
                                 <div>

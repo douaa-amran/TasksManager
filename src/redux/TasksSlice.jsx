@@ -2,9 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios'
 
 
-export const getTasks = createAsyncThunk('boards/fetchBoards', async (id) => {
-    const boards = await axios.get(`http://localhost:5000/api/boards/${id}/tasks`)
-    return boards.data
+export const getTasks = createAsyncThunk('tasks/fetchTasks', async (id) => {
+    const tasks = await axios.get(`http://localhost:5000/api/boards/${id}/tasks`)
+    return tasks.data
 })
 
 export const updateTaskStatus = createAsyncThunk('tasks/updateTaskStatus', async ({ boardId, taskId, status, name, description, due_date }) => {
@@ -50,6 +50,7 @@ const TasksSlice = createSlice({
         })
         builder.addCase(getTasks.fulfilled, (state, action) => {
             state.tasks = action.payload;
+            console.log(state.tasks)
             state.loading = false;
         })
         builder.addCase(updateTaskStatus.fulfilled, (state, action) => {
@@ -58,7 +59,6 @@ const TasksSlice = createSlice({
                 task.task_id === taskId ? { ...task, ...updatedData } : task
             );
             state.tasks = updatedTasks;
-            console.log(state.tasks,'before')
             state.loading = false;
         })
         builder.addCase(deleteTask.fulfilled, (state, action) => {

@@ -23,7 +23,7 @@ export default function Tasks() {
 
   return (
     <>
-      <div className="md:w-full lg:w-3/4 m-auto p-4">
+      <div className="ml-96 md:w-full lg:w-3/5 m-auto p-4">
         <ul className="my-4 space-y-3">
           {tasks.map((t) => (
             <>
@@ -42,9 +42,8 @@ export default function Tasks() {
         </ul>
       </div>
       <div>
-        {visible && <UpdateModal id_board={idBoard}toggle={toggle}/>}
+        {visible && <UpdateModal id_board={idBoard} toggle={toggle}/>}
       </div>
-      {console.log(tasks)}
     </>
   );
 }

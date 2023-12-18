@@ -42,7 +42,7 @@ export default function Board(props) {
             onChange={(e) => setEditedName(e.target.value)}
           />
         ) : (
-          <span>{props.name}</span>
+          <span className='flex justify-center align-middle'>{props.name}</span>
         )}
       </div>
       <div className="icons">
@@ -67,7 +67,7 @@ export default function Board(props) {
             <FaEdit />
           </a>
         )}
-        <Link className="btn" to={'/tasks/' + props.id.$oid}>
+        <Link className="btn" to={`/tasks/${props._id}`}>
           <MdMoreHoriz />
         </Link>
       </div>

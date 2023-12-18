@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Task.css';
 import { FaPen } from 'react-icons/fa6';
 import { useDispatch } from 'react-redux';

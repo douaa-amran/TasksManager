@@ -7,6 +7,29 @@ export const getBoards = createAsyncThunk('boards/fetchBoards', async () => {
     return boards.data
 })
 
+export const addBoard = createAsyncThunk('boards/addBoard', async (newBoardData, { dispatch }) => {
+    try {
+        console.log(newBoardData)
+        const response = await axios.post('http://localhost:5000/api/boards', newBoardData);
+
+    // Assuming your server returns the newly added board data, including its ID
+    const newBoard = response.data;
+    console.log(newBoard)
+    // Dispatch another action to update the Redux state with the newly added board
+    dispatch(addBToState(newBoard));
+
+    return newBoard;
+
+      } catch (error) {
+        throw error;
+      }
+})
+
+export const addBToState = (newBoard) => ({
+    type: 'boards/addBoardToState',
+    payload: newBoard,
+  });
+
 export const deleteBoard = createAsyncThunk('dboards/deleteBoard', async (id) => {
     try {
         await axios.delete(`http://localhost:5000/api/boards/${id.$oid}`);
@@ -31,9 +54,19 @@ const BoardsSlice = createSlice({
     name: 'boards',
     initialState: {
         boards: [],
-        loading:false
+        loading:false,
+        selectedBoard:null
     },
-    reducers: {},
+    reducers: {
+        addBoardToState: (state, action) => {
+            // Handle updating the state with the newly added board
+            state.boards.push(action.payload);
+          },
+        setSelectedBoard: (state, action) => {
+          console.log("Selected Board action:", action.payload);
+            state.selectedBoard = action.payload
+        }
+    },
     extraReducers:(builder) =>{
         builder.addCase(getBoards.pending, (state,action) =>{
             state.loading = true;
@@ -41,6 +74,7 @@ const BoardsSlice = createSlice({
         builder.addCase(getBoards.fulfilled, (state,action) =>{
             state.boards = action.payload;
             state.loading = false;
+            console.log(state.boards)
         })
         builder.addCase(deleteBoard.fulfilled, (state, action) => {
             state.boards = state.boards.filter((board) => board._id.$oid !== action.payload);
@@ -54,5 +88,5 @@ const BoardsSlice = createSlice({
 
 });
 
-export const {} = BoardsSlice.actions;
+export const {addBoardToState,setSelectedBoard} = BoardsSlice.actions;
 export default BoardsSlice.reducer;
