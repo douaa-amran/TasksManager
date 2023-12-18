@@ -7,6 +7,30 @@ export const getTasks = createAsyncThunk('tasks/fetchTasks', async (id) => {
     return tasks.data
 })
 
+export const addTask = createAsyncThunk('tasks/addTask', async ({boardId,newTaskData}, { dispatch }) => {
+    try {
+      console.log('new: ',newTaskData)
+      const response = await axios.post(`http://localhost:5000/api/boards/${boardId}/tasks`, newTaskData);
+  
+      // Assuming your server returns the newly added task data, including its ID
+      const newTask = response.data;
+      console.log('after: ',newTask)
+      
+      // Dispatch another action to update the Redux state with the newly added task
+      dispatch(addTToState(newTaskData));
+  
+      return newTask;
+  
+    } catch (error) {
+      throw error;
+    }
+  })
+
+  export const addTToState = (newTask) => ({
+    type: 'tasks/addTaskToState',
+    payload: newTask,
+  });
+
 export const updateTaskStatus = createAsyncThunk('tasks/updateTaskStatus', async ({ boardId, taskId, status, name, description, due_date }) => {
     try {
         const payload = {};
@@ -40,6 +64,10 @@ const TasksSlice = createSlice({
         selectedTask: null
     },
     reducers: {
+        addTaskToState: (state, action) => {
+            // Handle updating the state with the newly added board
+            state.tasks.push(action.payload);
+        },
         setSelectedTask: (state, action) => {
             state.selectedTask = action.payload
         }
@@ -52,6 +80,9 @@ const TasksSlice = createSlice({
             state.tasks = action.payload;
             console.log(state.tasks)
             state.loading = false;
+        })
+        builder.addCase(addTask.rejected, (state, action) => {
+            console.log('error')
         })
         builder.addCase(updateTaskStatus.fulfilled, (state, action) => {
             const { taskId, updatedData } = action.payload;
@@ -69,5 +100,5 @@ const TasksSlice = createSlice({
 
 });
 
-export const { setSelectedTask } = TasksSlice.actions;
+export const { addTaskToState,setSelectedTask } = TasksSlice.actions;
 export default TasksSlice.reducer;

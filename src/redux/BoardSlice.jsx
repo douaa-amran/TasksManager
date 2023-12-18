@@ -3,90 +3,94 @@ import axios from 'axios'
 
 
 export const getBoards = createAsyncThunk('boards/fetchBoards', async () => {
-    const boards = await axios.get('http://localhost:5000/api/boards')
-    return boards.data
+  const boards = await axios.get('http://localhost:5000/api/boards')
+  return boards.data
 })
 
 export const addBoard = createAsyncThunk('boards/addBoard', async (newBoardData, { dispatch }) => {
-    try {
-        console.log(newBoardData)
-        const response = await axios.post('http://localhost:5000/api/boards', newBoardData);
+  try {
+    console.log(newBoardData)
+    const response = await axios.post('http://localhost:5000/api/boards', newBoardData);
 
     // Assuming your server returns the newly added board data, including its ID
     const newBoard = response.data;
     console.log(newBoard)
+    
     // Dispatch another action to update the Redux state with the newly added board
     dispatch(addBToState(newBoard));
 
     return newBoard;
 
-      } catch (error) {
-        throw error;
-      }
+  } catch (error) {
+    throw error;
+  }
 })
 
 export const addBToState = (newBoard) => ({
-    type: 'boards/addBoardToState',
-    payload: newBoard,
-  });
+  type: 'boards/addBoardToState',
+  payload: newBoard,
+});
 
 export const deleteBoard = createAsyncThunk('dboards/deleteBoard', async (id) => {
-    try {
-        await axios.delete(`http://localhost:5000/api/boards/${id.$oid}`);
-        return id.$oid;
-      } catch (error) {
-        throw error;
-      }
+  try {
+    await axios.delete(`http://localhost:5000/api/boards/${id?.$oid}`);
+    return id.$oid;
+  } catch (error) {
+    throw error;
+  }
 })
 
 export const updateBoard = createAsyncThunk('uboards/updateBoard', async ({ id, newName }) => {
-    try {
-        await axios.patch(`http://localhost:5000/api/boards/${id.$oid}`,{ board_name: newName },{headers: {
-            'Content-Type': 'application/json',
-          }});
-        return { id: id.$oid, updatedData: { board_name: newName } };
-      } catch (error) {
-        throw error;
+  try {
+    await axios.patch(`http://localhost:5000/api/boards/${id.$oid}`, { board_name: newName }, {
+      headers: {
+        'Content-Type': 'application/json',
       }
+    });
+    return { id: id.$oid, updatedData: { board_name: newName } };
+  } catch (error) {
+    throw error;
+  }
 })
 
 const BoardsSlice = createSlice({
-    name: 'boards',
-    initialState: {
-        boards: [],
-        loading:false,
-        selectedBoard:null
+  name: 'boards',
+  initialState: {
+    boards: [],
+    loading: false,
+    selectedBoard: null
+  },
+  reducers: {
+    addBoardToState: (state, action) => {
+      // Handle updating the state with the newly added board
+      state.boards.push(action.payload);
     },
-    reducers: {
-        addBoardToState: (state, action) => {
-            // Handle updating the state with the newly added board
-            state.boards.push(action.payload);
-          },
-        setSelectedBoard: (state, action) => {
-          console.log("Selected Board action:", action.payload);
-            state.selectedBoard = action.payload
-        }
-    },
-    extraReducers:(builder) =>{
-        builder.addCase(getBoards.pending, (state,action) =>{
-            state.loading = true;
-        })
-        builder.addCase(getBoards.fulfilled, (state,action) =>{
-            state.boards = action.payload;
-            state.loading = false;
-            console.log(state.boards)
-        })
-        builder.addCase(deleteBoard.fulfilled, (state, action) => {
-            state.boards = state.boards.filter((board) => board._id.$oid !== action.payload);
-        })
-        builder.addCase(updateBoard.fulfilled, (state, action) => {
-            state.boards = state.boards.map((board) =>  board._id.$oid === action.payload.id
-            ? { ...board, ...action.payload.updatedData }
-            : board);
-        })
+    setSelectedBoard: (state, action) => {
+      console.log("Selected Board action:", action.payload);
+      state.selectedBoard = action.payload
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getBoards.pending, (state, action) => {
+      state.loading = true;
+    })
+    builder.addCase(getBoards.fulfilled, (state, action) => {
+      state.boards = action.payload;
+      state.loading = false;
+      console.log(state.boards)
+    })
+    builder.addCase(deleteBoard.fulfilled, (state, action) => {
+      console.log(action.payload)
+      state.boards = state.boards.filter((board) => board._id.$oid !== action.payload);
+    })
+    builder.addCase(updateBoard.fulfilled, (state, action) => {
+      state.boards = state.boards.map((board) => board._id.$oid === action.payload.id
+        ? { ...board, ...action.payload.updatedData }
+        : board);
+    })
+  }
 
 });
 
-export const {addBoardToState,setSelectedBoard} = BoardsSlice.actions;
+export const { addBoardToState, setSelectedBoard } = BoardsSlice.actions;
 export default BoardsSlice.reducer;

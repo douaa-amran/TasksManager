@@ -36,7 +36,6 @@ export default function AddBoard({ toggle }) {
                                 e.preventDefault();
                                 toggle();
                                 dispatch(addBoard({board_name:name,tasks:[]}));
-                                dispatch(getBoards());
                                 }}
                                 className="space-y-8" action="#" method="POST">
                                 <div>

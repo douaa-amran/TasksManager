@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa';
 import { MdMoreHoriz } from "react-icons/md";
 import { CiSaveUp1 } from "react-icons/ci";
 import { MdOutlineCancel } from "react-icons/md";
 import { useDispatch } from 'react-redux';
-import { deleteBoard, modifier, supprimer, updateBoard } from '../redux/BoardSlice';
+import { deleteBoard, updateBoard } from '../redux/BoardSlice';
 import './board.css';
 import { Link } from 'react-router-dom';
 
@@ -13,7 +12,7 @@ export default function Board(props) {
   const dispatch = useDispatch();
   const [editable, setEditable] = useState(false);
   const [editedName, setEditedName] = useState(props.name);
-
+console.log(props.id)
   useEffect(() => {
     setEditedName(props.name);
   }, [props.name]);
@@ -67,7 +66,7 @@ export default function Board(props) {
             <FaEdit />
           </a>
         )}
-        <Link className="btn" to={`/tasks/${props._id}`}>
+        <Link className="btn" to={`/tasks/${props.id?.$oid}`}>
           <MdMoreHoriz />
         </Link>
       </div>

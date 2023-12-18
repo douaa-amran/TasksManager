@@ -3,24 +3,18 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTasks, updateTaskStatus } from '../redux/TasksSlice';
+import { addTask, getTasks } from '../redux/TasksSlice';
 
-export default function AddTask({ toggle, id_board}) {
+export default function AddTask({ toggle, id_board }) {
     const dispatch = useDispatch()
     const tasks = useSelector((state) => state.tasks.tasks);
-
+console.log('before',tasks)
     useEffect(() => {
-        try{
-           dispatch(getTasks(id_board)); 
-        }
-        catch(err){
-            console.log("Error getting tasks: ", err);
-            }
-        
+        dispatch(getTasks(id_board));
       }, [dispatch, id_board]);
 
 
-    const taskId = tasks.length>0 ? tasks[tasks.length-1].task_id + 1 : 1;
+    const taskId = tasks.length > 0 ? tasks[tasks.length - 1].task_id + 1 : 1;
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -31,16 +25,16 @@ export default function AddTask({ toggle, id_board}) {
 
     useEffect(() => {
         flatpickrRef.current = flatpickr('#due_date', {
-          dateFormat: 'Y-m-d',
-          onChange: (selectedDates, dateStr) => {
-            setDueDate(dateStr);
-          },
+            dateFormat: 'Y-m-d',
+            onChange: (selectedDates, dateStr) => {
+                setDueDate(dateStr);
+            },
         });
-    
+
         return () => {
-          flatpickrRef.current.destroy();
+            flatpickrRef.current.destroy();
         };
-      }, []);
+    }, []);
 
     return (
         <div id="default-modal" tabIndex="-1" aria-hidden="true" className="overflow-y-auto overflow-x-hidden right-0 top-0 left-0 fixed z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%)] max-h-full bg-slate-700/70">
@@ -67,8 +61,15 @@ export default function AddTask({ toggle, id_board}) {
                                 e.preventDefault();
                                 console.log('Form submitted');
                                 toggle();
-                                dispatch(updateTaskStatus({ boardId: id_board, taskId: taskId, name, description, due_date:dueDate ,status:'In progress'}));
-                                }}
+                                dispatch(addTask({ boardId: id_board, newTaskData: { task_id:taskId, task_name:name, description, due_date: dueDate, status: 'In progress' } }))
+                                    .unwrap()
+                                    .then((response) => {
+                                        console.log('Task added successfully:', response);
+                                    })
+                                    .catch((error) => {
+                                        console.error('Error adding task:', error);
+                                    });
+                            }}
                                 className="space-y-8" action="#" method="POST">
                                 <div>
                                     <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-300">
@@ -127,7 +128,7 @@ export default function AddTask({ toggle, id_board}) {
                                         className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 
                                     >
-                                        Save Changes
+                                        Add to board
                                     </button>
                                 </div>
                             </form>
