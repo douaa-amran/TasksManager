@@ -3,19 +3,15 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getBoards, setSelectedBoard } from '../redux/BoardSlice';
 import { IoIosAdd } from "react-icons/io";
-import AddBoard from './AddBoard';
 import { Link } from 'react-router-dom';
-import AddTask from './AddTask';
 import { FaClipboardList } from "react-icons/fa";
 
 
-export default function Drawer() {
+export default function SideBar({toggleB,toggleT}) {
     const boards = useSelector(state => state.boards.boards)
-    const selectedBoard = useSelector(state => state.boards.selectedBoard)
     const dispatch = useDispatch();
     const [visibleDD, setVisibleDD] = useState(true)
-    const [visibleAddB, setVisibleAddB] = useState(false)
-    const [visibleAddT, setVisibleAddT] = useState(false)
+    
 
     useEffect(() => {
         dispatch(getBoards());
@@ -24,18 +20,14 @@ export default function Drawer() {
     const toggleDropDown = () => {
         setVisibleDD(!visibleDD);
     }
-    const toggleAddBoard = () => {
-        setVisibleAddB(!visibleAddB);
-    }
-    const toggleAddTask = () => {
-        setVisibleAddT(!visibleAddT);
-    }
+    
+    
     return (
-        <div id="drawer-navigation" className="fixed top-0 left-0 h-screen p-4 overflow-y-auto z-10 transition-transform translate-x-0 bg-white w-80 dark:bg-gray-800" tabIndex="-1" aria-labelledby="drawer-navigation-label">
-            <h5 id="drawer-navigation-label" className="text-4xl pl-24 pt-12 pb-10 border-b-4 border-gray-500 font-semibold text-gray-500 uppercase dark:text-gray-400 ">Menu</h5>
+        <div id="drawer-navigation" className="fixed h-screen p-4 overflow-y-auto transition-transform translate-x-0 bg-white basis-80 dark:bg-gray-800" tabIndex="-1" aria-labelledby="drawer-navigation-label">
+            <h5 id="drawer-navigation-label" className="text-4xl px-20 pt-12 pb-10 border-b-4 border-gray-500 font-semibold text-gray-500 uppercase dark:text-gray-400 ">Menu</h5>
 
 
-            <div className="py-10 overflow-y-auto">
+            <div className="py-10 ">
                 <ul className="space-y-2 font-medium">
                     <li>
                         <Link href="#" to={'/'} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -58,23 +50,23 @@ export default function Drawer() {
                             <button
                                 type="button"
                                 className="flex items-center text-gray-900 dark:text-white  group font-extrabold text-2xl"
-                                onClick={toggleAddBoard}
+                                onClick={toggleB}
                             >
                                 <IoIosAdd />
                             </button>
-                            {visibleAddB && < AddBoard toggle={toggleAddBoard} />}
+                            
                         </div>
 
 
                         <ul id="dropdown-example" className={`${visibleDD ? '' : 'hidden'} py-2 space-y-2`}>
                             {boards && boards.map((board, i) => (
-                                <li key={i} className='flex '>
-                                    <Link href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" to={`/tasks/${board._id?.$oid}`}>{board.board_name}</Link>
+                                <li key={i} className='flex rounded-lg text-gray-500 hover:text-white ml-9 hover:bg-gray-700 '>
+                                    <Link href="#" className="flex items-center w-full p-2 transition duration-75   group " to={`/tasks/${board._id?.$oid}`}>{board.board_name}</Link>
                                     <button
                                         type="button"
-                                        className="flex items-center text-gray-900 dark:text-white  group font-extrabold text-2xl"
+                                        className="flex items-center group font-extrabold text-2xl"
                                         onClick={() => {
-                                            toggleAddTask();
+                                            toggleT();
                                             
                                             dispatch(setSelectedBoard(board._id?.$oid))
                                         }}
@@ -85,11 +77,11 @@ export default function Drawer() {
                             ))}
 
                         </ul>
-                        {visibleAddT && < AddTask toggle={toggleAddTask} id_board={selectedBoard}/>}
+                        
                     </li>
-
                 </ul>
             </div>
+            
         </div>
 
 

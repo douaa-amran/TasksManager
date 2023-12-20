@@ -4,7 +4,13 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'custom-purpletext': '#B360E6',
+        'custom-purple': '#934FBC',
+        'custom-purplehover': '#784099',
+      },
+    },
   },
   plugins: [],
 }

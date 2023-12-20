@@ -12,7 +12,9 @@ export default function Task({ taskId, id_board,name, des, dueDate,status , togg
 
     return (
         <li>
-            <div className="p-5 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white flex items-center gap-3">
+            <div className="p-5 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 
+            group hover:shadow dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-white flex items-center 
+            gap-3">
                 <div className="checkbox-wrapper">
                     <input id={checkboxId} 
                     type="checkbox" 

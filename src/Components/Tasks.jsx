@@ -23,8 +23,8 @@ export default function Tasks() {
 
   return (
     <>
-      <div className="ml-96 md:w-full lg:w-3/5 m-auto p-4">
-        <ul className="my-4 space-y-3">
+      <div className="flex  md:w-full lg:w-3/5 ml-96 p-4  justify-center">
+        <ul className="my-4 space-y-3 w-11/12">
           {tasks.map((t) => (
             <>
               <Task

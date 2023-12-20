@@ -9,17 +9,16 @@ export const getBoards = createAsyncThunk('boards/fetchBoards', async () => {
 
 export const addBoard = createAsyncThunk('boards/addBoard', async (newBoardData, { dispatch }) => {
   try {
-    console.log(newBoardData)
     const response = await axios.post('http://localhost:5000/api/boards', newBoardData);
 
     // Assuming your server returns the newly added board data, including its ID
-    const newBoard = response.data;
-    console.log(newBoard)
     
+    const newBoardId = {'$oid':response.data.board_id};
+    console.log('new',newBoardId)
     // Dispatch another action to update the Redux state with the newly added board
-    dispatch(addBToState(newBoard));
+    dispatch(addBToState({ ...newBoardData, _id: newBoardId }));
 
-    return newBoard;
+    return newBoardId;
 
   } catch (error) {
     throw error;
@@ -66,7 +65,6 @@ const BoardsSlice = createSlice({
       state.boards.push(action.payload);
     },
     setSelectedBoard: (state, action) => {
-      console.log("Selected Board action:", action.payload);
       state.selectedBoard = action.payload
     }
   },
@@ -77,11 +75,9 @@ const BoardsSlice = createSlice({
     builder.addCase(getBoards.fulfilled, (state, action) => {
       state.boards = action.payload;
       state.loading = false;
-      console.log(state.boards)
     })
     builder.addCase(deleteBoard.fulfilled, (state, action) => {
-      console.log(action.payload)
-      state.boards = state.boards.filter((board) => board._id.$oid !== action.payload);
+      state.boards = state.boards.filter((board) => board._id?.$oid !== action.payload);
     })
     builder.addCase(updateBoard.fulfilled, (state, action) => {
       state.boards = state.boards.map((board) => board._id.$oid === action.payload.id

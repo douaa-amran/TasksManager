@@ -28,7 +28,7 @@
 
 .button:hover {
   transition-duration: 0.3s;
-  background-color: rgb(98, 37, 159);
+  background-color: #8B50BC;
   align-items: center;
   gap: 0;
 }
