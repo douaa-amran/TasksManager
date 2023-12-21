@@ -14,7 +14,7 @@ export default function Boards() {
     
   return (
     boards &&
-    <div className='boards p-10 flex flex-wrap flex-1 justify-center ml-96 gap-x-6 gap-y-6'>
+    <div className='boards p-10 flex flex-wrap flex-1 justify-center ml-80 gap-x-6 gap-y-6'>
       {boards.map((b,i) => <Board key={i} name={b.board_name} id={b._id}/>)}
     </div>
   )

@@ -9,6 +9,8 @@ import UpdateModal from './UpdateModal'
 
 export default function Tasks() {
   const { idBoard } = useParams();
+  const boards = useSelector((state) => state.boards.boards);
+  const board = boards.find(b => b._id?.$oid === idBoard)
   const tasks = useSelector((state) => state.tasks.tasks);
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
@@ -23,8 +25,9 @@ export default function Tasks() {
 
   return (
     <>
-      <div className="flex  md:w-full lg:w-3/5 ml-96 p-4  justify-center">
-        <ul className="my-4 space-y-3 w-11/12">
+      <div className="flex flex-col md:w-full lg:w-3/5 ml-96 p-4  justify-center">
+        <h1 className='self-center text-4xl font-bold text-custom-peach m-4 p-6 border-b-4 border-custom-peach'>{board?.board_name}</h1>
+        <ul className="my-4 space-y-3 w-11/12 self-center">
           {tasks.map((t) => (
             <>
               <Task

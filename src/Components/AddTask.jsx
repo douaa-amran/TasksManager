@@ -86,7 +86,7 @@ export default function AddTask({ toggle, id_board }) {
                                             required
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
-                                            className="block w-full rounded-md border-0 py-1.5 font-medium text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-left"
+                                            className="block w-full rounded-md border-0 py-1.5 font-medium text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-custom-purpletext sm:text-sm sm:leading-6 text-left"
                                         />
                                     </div>
                                 </div>
@@ -103,7 +103,7 @@ export default function AddTask({ toggle, id_board }) {
                                             required
                                             value={description}
                                             onChange={(e) => setDescription(e.target.value)}
-                                            className="block w-full rounded-md border-0 py-1.5 font-medium text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 text-left"
+                                            className="block w-full rounded-md border-0 py-1.5 font-medium text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-custom-purpletext sm:text-sm sm:leading-6 text-left"
                                         />
                                     </div>
                                 </div>
@@ -121,7 +121,7 @@ export default function AddTask({ toggle, id_board }) {
                                             required
                                             value={dueDate}
                                             onChange={(e) => setDueDate(e.target.value)}
-                                            className="flatpickr block w-full rounded-md border-0 py-1.5 font-medium text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300  focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            className="flatpickr block w-full rounded-md border-0 py-1.5 font-medium text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300  focus:ring-2 focus:ring-inset focus:ring-custom-purpletext sm:text-sm sm:leading-6"
                                         />
                                     </div>
                                 </div>

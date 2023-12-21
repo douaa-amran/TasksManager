@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa';
+import { IoIosSave } from "react-icons/io";
 import { MdMoreHoriz } from "react-icons/md";
-import { CiSaveUp1 } from "react-icons/ci";
 import { MdOutlineCancel } from "react-icons/md";
 import { useDispatch } from 'react-redux';
 import { deleteBoard, updateBoard } from '../redux/BoardSlice';
@@ -41,10 +41,10 @@ console.log(props.id)
             onChange={(e) => setEditedName(e.target.value)}
           />
         ) : (
-          <span className='flex justify-center align-middle'>{props.name}</span>
+          <span className='flex justify-center text-center'>{props.name}</span>
         )}
       </div>
-      <div className="icons">
+      <div className="icons font-extrabold">
         <a className="btn" href="#" onClick={() => dispatch(deleteBoard(props.id))}>
           {/* Delete Icon */}
           <FaTrash />
@@ -53,7 +53,7 @@ console.log(props.id)
           <>
             <a className="btn" href="#" onClick={handleSave}>
               {/* Save Icon */}
-              <CiSaveUp1 />
+              <IoIosSave />
             </a>
             <a className="btn" href="#" onClick={handleCancelEdit}>
               {/* Cancel Icon */}
