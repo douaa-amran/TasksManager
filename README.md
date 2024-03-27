@@ -83,7 +83,11 @@ To run the Tasks Manager App locally, follow these steps:
 - Update task status using the task status checkbox.
 
 ## Screenshots
-<img width="960" alt="dashboard" src="https://github.com/douaa-amran/TasksManager/assets/120199553/20329bbd-3593-43ba-b06d-255259841fec">
+<img width="884" alt="dashboard" src="https://github.com/douaa-amran/TasksManager/assets/120199553/404e72e7-15a9-4a94-87d6-96a07465dde1">
+
+<img width="875" alt="tasks" src="https://github.com/douaa-amran/TasksManager/assets/120199553/d499ee3e-8d83-492c-bcc1-3cbb5633138a">
+
+<img width="875" alt="addtask" src="https://github.com/douaa-amran/TasksManager/assets/120199553/03f6f511-2b91-42f9-acca-bede102ee765">
 
 ## Contributing
 
