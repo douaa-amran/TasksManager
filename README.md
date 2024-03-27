@@ -1,70 +1,87 @@
-# Getting Started with Create React App
+# Tasks Manager App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The Tasks Manager App is a web-based application designed to help users manage their tasks efficiently. This app provides a user-friendly interface for creating, editing, and organizing tasks across different boards.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Dashboard:** 
+  - Contains a sidebar for navigation.
+  - Boards where you can add, edit, and delete tasks.
+
+- **Board Management:**
+  - Create new boards.
+  - Edit existing boards.
+  - Delete boards when necessary.
+
+- **Task Management:**
+  - Add tasks to specific boards.
+  - Edit task details.
+  - Update task statuses (e.g., in progress, completed).
+
+- **Forms:**
+  - Form to add new boards.
+  - Form to add new tasks.
+  - Form to update existing tasks.
+
+## Technologies Used
+
+- **Frontend:**
+  - HTML/CSS
+  - JavaScript
+  - React.js
+
+- **Backend:**
+  - Python
+  - Flask
+  - MongoDB (using PyMongo)
+
+## Installation
+
+To run the Tasks Manager App locally, follow these steps:
+
+1. Clone this repository to your local machine:
+
+### `git clone <repository-url>`
+
+2. Navigate to the project directory:
+
+### `cd tasks-manager-app`
+
+3. Install frontend dependencies:
+
+### `npm install`
+
+4. Start the frontend development server:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+5. Navigate to the backend directory:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### `cd backend`
 
-### `npm test`
+6. Install backend dependencies (make sure you have Python and pip installed):
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `pip install Flask pymongo Flask-Cors`
 
-### `npm run build`
+7. Start the backend server:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `python app.py`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+8. Open your browser and go to `http://localhost:3000` to view the app.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Usage
 
-### `npm run eject`
+1. **Dashboard:**
+- Navigate through different boards using the sidebar.
+- Create new boards using the provided form.
+- Edit existing boards by clicking on the edit icon.
+- Delete boards by clicking on the delete icon.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Tasks:**
+- Add new tasks to a specific board using the task form.
+- Edit task details by clicking on the edit button.
+- Update task status using the task status checkbox.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Contributing
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Contributions are welcome! If you find any bugs or have suggestions for improvements, please feel free to open an issue or submit a pull request.
