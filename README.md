@@ -41,31 +41,31 @@ To run the Tasks Manager App locally, follow these steps:
 
 1. Clone this repository to your local machine:
 
-bash ```git clone <repository-url>```
+```git clone <repository-url>```
 
 2. Navigate to the project directory:
 
-### `cd tasks-manager-app`
+```cd tasks-manager-app```
 
 3. Install frontend dependencies:
 
-### `npm install`
+```npm install```
 
 4. Start the frontend development server:
 
-### `npm start`
+```npm start```
 
 5. Navigate to the backend directory:
 
-### `cd backend`
+```cd backend```
 
 6. Install backend dependencies (make sure you have Python and pip installed):
 
-### `pip install Flask pymongo Flask-Cors`
+```pip install Flask pymongo Flask-Cors```
 
 7. Start the backend server:
 
-### `python app.py`
+```python app.py```
 
 8. Open your browser and go to `http://localhost:3000` to view the app.
 
