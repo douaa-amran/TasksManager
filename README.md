@@ -41,7 +41,7 @@ To run the Tasks Manager App locally, follow these steps:
 
 1. Clone this repository to your local machine:
 
-### `git clone <repository-url>`
+bash ```git clone <repository-url>```
 
 2. Navigate to the project directory:
 
